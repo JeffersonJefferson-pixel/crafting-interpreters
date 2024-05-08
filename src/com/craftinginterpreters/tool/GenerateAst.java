@@ -19,6 +19,10 @@ public class GenerateAst {
                 "Literal    : Object value",
                 "Unary      : Token operator, Expr right"
         ));
+        defineAst(outputDir, "Stmt", Arrays.asList(
+           "Expression  : Expr expression",
+           "Print       : Expr expression"
+        ));
     }
 
     private static void defineAst(String outputDir, String baseName, List<String> types) throws FileNotFoundException, UnsupportedEncodingException {
@@ -31,7 +35,7 @@ public class GenerateAst {
         writer.println();
         writer.println("abstract class " + baseName + " {");
 
-        defineVistor(writer, baseName, types);
+        defineVisitor(writer, baseName, types);
 
         for (String type : types) {
             String className = type.split(":")[0].trim();
@@ -47,7 +51,7 @@ public class GenerateAst {
         writer.close();
     }
 
-    private static void defineVistor(PrintWriter writer, String baseName, List<String> types) {
+    private static void defineVisitor(PrintWriter writer, String baseName, List<String> types) {
         writer.println("    interface Visitor<R> {");
 
         for (String type : types) {
